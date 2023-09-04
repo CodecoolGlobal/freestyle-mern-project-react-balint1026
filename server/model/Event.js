@@ -4,10 +4,10 @@ import { Schema, model } from "mongoose";
 const eventSchema = new Schema({
   name: String,
   description: String,
-  attendees: [Number],
+  attendees: [String],
   location: String,
-  price: Number,
-  createdAt: Date
+  date: Date,
+  price: Number
 });
 
 export default model('Event', eventSchema);
