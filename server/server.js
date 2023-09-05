@@ -29,8 +29,8 @@ start()
 //get all users
 app.get('/api/users', (req, res) => {
   User.find(req.body)
-    .sort({ username: 1 })
-    .then(users => res.status(200).json(users));
+  .sort({ username: 1 })
+  .then(users => res.status(200).json(users));
 })
 
 //-- get a user
