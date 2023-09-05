@@ -2,11 +2,12 @@ import mongoose from "mongoose";
 import { Schema, model } from "mongoose";
 
 const eventSchema = new Schema({
+  host: String,
   name: String,
   description: String,
   attendees: [String],
   location: String,
-  date: Date,
+  date: String,
   price: Number
 });
 
