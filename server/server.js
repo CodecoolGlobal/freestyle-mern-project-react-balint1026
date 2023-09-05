@@ -87,3 +87,24 @@ app.post('/api/register', async (req, res) => {
    }
 })
 
+app.post('/api/events', async (req, res) => {
+    try {
+      const { host, name, description, attendees, location, date, price } = req.body;
+  
+      const newEvent = new Event({
+        host,
+        name,
+        description,
+        attendees,
+        location,
+        date,
+        price,
+      });
+  
+      const savedEvent = await newEvent.save();
+      res.status(201).json(savedEvent);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server Error' });
+    }
+  });
