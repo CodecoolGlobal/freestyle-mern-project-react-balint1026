@@ -30,7 +30,7 @@ start()
 app.get('/api/users', (req, res) => {
   User.find(req.body)
   .sort({ username: 1 })
-  .then(users => res.status(200).json(users))
+  .then(users => res.status(200).json(users));
 })
 
 //-- get a user
@@ -44,6 +44,13 @@ app.get('/api/users/:id', (req, res) => {
     });
 });
 
+//Create new User
+app.post('/api/users', (req, res) => {
+  User.create(req.body)
+    .then(res.status(201).json("User created"))
+    .catch(res.status(500).json({ error: "Could not create document" }))
+})
+
 //update user
 app.patch('/api/users/:id', (req, res) => {
   User.findByIdAndUpdate(req.params.id, { $set: req.body })
@@ -53,7 +60,30 @@ app.patch('/api/users/:id', (req, res) => {
     });
 });
 
+//Delete user
+app.delete('/api/users/:id', (req, res) => {
+  User.findByIdAndDelete(req.params.id)
+    .then(res.status(200).json("User deleted"))
+    .catch(res.status(500).json({ error: "Could not delete the document" }))
+});
+
 //
 
+//Login / register Enpoints
 
+app.get('/api/login', (req, res) => {
+  User.find({username: req.body.username, password: req.body.password})
+  .then(user => res.status(200).json(user));
+})
+
+app.post('/api/register', async (req, res) => {
+  const result = await User.find({username: req.body.username});
+   if (result.length > 0) {
+    res.status(500).json({error: "nah"})
+   }
+   else{
+    User.create(req.body)
+    .then(res.status(200).json("Registration successs"))
+   }
+})
 
