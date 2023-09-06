@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       {isAddingNewEvent ? (
-        <EventCreation />
+        <EventCreation handelEventAddingDone={() => setIsAddingNewEvent(false)}/>
       ) : (
         <>
           <img className='logo' src={logo} />
