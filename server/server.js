@@ -33,6 +33,15 @@ app.get('/api/users', (req, res) => {
     .then(users => res.status(200).json(users));
 })
 
+app.get('/api/users/:username', async (req, res) => {
+  try {
+    const user = await User.find({username: req.params.username});
+    res.send(user);
+  } catch (err) {
+    console.log(err);
+  }
+})
+
 //-- get a user
 app.get('/api/users/:id', (req, res) => {
   User.findById(req.params.id)
