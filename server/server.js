@@ -72,19 +72,21 @@ app.delete('/api/users/:id', (req, res) => {
 //Login / register Enpoints
 
 app.get('/api/login', (req, res) => {
-  User.find({username: req.body.username, password: req.body.password})
-  .then(user => res.status(200).json(user));
+  User.find({ username: req.body.username, password: req.body.password })
+    .then(user => res.status(200).json(user))
+    .catch(res.status(500).json({ error: "Error in login" }))
 })
 
 app.post('/api/register', async (req, res) => {
-  const result = await User.find({username: req.body.username});
-   if (result.length > 0) {
-    res.status(500).json({error: "nah"})
-   }
-   else{
+  const result = await User.find({ username: req.body.username });
+  if (result.length > 0) {
+    res.status(500).json({ error: "Username is taken" })
+  }
+  else {
     User.create(req.body)
-    .then(res.status(200).json("Registration successs"))
-   }
+      .then(res.status(200).json("Registration successs"))
+      .catch(res.status(500).json({ error: "Registration failed" }))
+  }
 })
 
 app.post('/api/events', async (req, res) => {
