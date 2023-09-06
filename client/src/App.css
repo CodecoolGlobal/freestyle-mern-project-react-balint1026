@@ -70,3 +70,17 @@ body {
   margin-left: 1vw;
   font-weight: bold;
 }
+
+.EventList {
+  height: calc(92vh - 2vw);
+  width: 77vw;
+  margin-top: 8vh;
+  float: left;
+  border: 2px solid red;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+.event-item {
+  border: 1px solid black;
+}
