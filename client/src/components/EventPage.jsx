@@ -18,7 +18,9 @@ const EventPage = (props) => {
             <p>Location: {event.location}</p>
             <p>Date: {event.date}</p>
             <p>Price: {event.price}</p>
-            <p>Attendees: {event.attendees}</p>
+            <p>Attendees: {event.attendees.map((person) => (
+                <span key={person._id}>{person.name}</span>
+            ))}</p>
           </>
         )}
       </>

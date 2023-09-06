@@ -22,16 +22,20 @@ function App() {
   return (
     <>
       {isAddingNewEvent ? (
-        <EventCreation handelEventAddingDone={() => setIsAddingNewEvent(false)}/>
+        <EventCreation handelEventAddingDone={() => setIsAddingNewEvent(false)} />
       ) : (
         <>
-          <img className='logo' src={logo} />
-          <div className='addEventBtn' onClick={handleAddNewEvent}><p>Add New Event</p></div>
-          {selectedEvent ? <EventPage event={selectedEvent} /> : (
-            <>
-              <EventList onSelectedEvent={(event) => { handleSelectedEvent(event) }} />
-              < UserList />
-            </>)}
+          {selectedEvent ?
+            (
+              <EventPage event={selectedEvent} />
+            ) : (
+              <>
+                <img className='logo' src={logo} />
+                <div className='addEventBtn' onClick={handleAddNewEvent}><p>Add New Event</p></div>
+                <EventList onSelectedEvent={(event) => { handleSelectedEvent(event) }} />
+                < UserList />
+              </>
+            )}
         </>
       )}
     </>
