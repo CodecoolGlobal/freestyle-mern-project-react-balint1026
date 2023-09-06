@@ -1,0 +1,72 @@
+:root {
+  --bg: #ffffff;
+  --elementbg: #f0f5f8;
+  --primary: #0a60e5;
+  --secondary: #7c838b;
+}
+
+body {
+  margin: 1vw;
+}
+
+.UserList {
+  height: calc(100vh - 2vw);
+  width: 20vw;
+  float: right;
+  border-radius: 1vw;
+  background-color: var(--elementbg);
+}
+
+.UserList > input {
+  width: 87%;
+  height: 3vh;
+  margin-left: 5%;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  border-radius: .6vw;
+  font-size: medium;
+  border: 3px solid var(--primary);
+  background-color: var(--bg);
+  outline: none;
+}
+
+.UserList > div {
+  width: 100%;
+  height: calc(92vh - 2vw);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.UserList > div::-webkit-scrollbar {
+  width: 5px;
+}
+
+.UserList > div::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.UserList > div::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 1vw;
+}
+
+.UserList > div > div {
+  width: 100%;
+  margin-bottom: 1vh;
+  position: relative;
+  cursor: pointer;
+}
+
+.UserList > div > div > img {
+  height: 10vh;
+  border-radius: 5vw;
+  margin-left: 1vw;
+  border: 3px solid var(--primary);
+}
+
+.UserList > div > div > span {
+  position: absolute;
+  margin-top: 4vh;
+  margin-left: 1vw;
+  font-weight: bold;
+}

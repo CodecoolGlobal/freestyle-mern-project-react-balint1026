@@ -29,8 +29,8 @@ start()
 //get all users
 app.get('/api/users', (req, res) => {
   User.find(req.body)
-    .sort({ username: 1 })
-    .then(users => res.status(200).json(users));
+  .sort({ username: 1 })
+  .then(users => res.status(200).json(users));
 })
 
 //-- get a user
@@ -89,3 +89,24 @@ app.post('/api/register', async (req, res) => {
   }
 })
 
+app.post('/api/events', async (req, res) => {
+    try {
+      const { host, name, description, attendees, location, date, price } = req.body;
+  
+      const newEvent = new Event({
+        host,
+        name,
+        description,
+        attendees,
+        location,
+        date,
+        price,
+      });
+  
+      const savedEvent = await newEvent.save();
+      res.status(201).json(savedEvent);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server Error' });
+    }
+  });
