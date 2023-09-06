@@ -14,6 +14,8 @@ async function start() {
     await mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.8u3exxo.mongodb.net/project`)
     app.listen(3000, () => console.log("Server started on port 3000"));
     console.log('mongo is connected')
+    //loadAttendeesIntoEveryEvent();
+    //loadUserIdsIntoEvents();
   } catch (err) {
     console.error('Mongo cant connect: ', err)
   };
@@ -134,3 +136,44 @@ app.get('/api/events/:id', (req, res) => {
     .catch(() => {res.status(500)});
 });
 
+/*
+async function loadAttendeesIntoEveryEvent() {
+  const events = await Event.find({});
+  const users = await User.find({});
+
+  for (const user of users) {
+    let userEvents = (await User.findById(user._id)).attending;
+    if (userEvents[0] === '') {
+      userEvents = [];
+    }
+
+    for (let i = 0; i < Math.floor(Math.random() * 7); i++) {
+      const eventIdToPush = events[Math.floor(Math.random() * events.length)]._id;
+
+      if (!userEvents.includes(eventIdToPush)) {
+        userEvents.push(eventIdToPush);
+      }
+    }
+
+    await User.findByIdAndUpdate(user._id, { $set: {attending: userEvents} });
+  }
+}
+*/
+
+/*
+async function loadUserIdsIntoEvents() {
+  const events = await Event.find({});
+  const users = await User.find({});
+
+  for (const user of users) {
+    for (const eventId of user.attending) {
+      const eventAttendees = (await Event.findById(eventId)).attendees;
+
+      if (!eventAttendees.includes(user._id)) {
+        eventAttendees.push(user._id);
+        await Event.findByIdAndUpdate(eventId, { $set: {attendees: eventAttendees} });
+      }
+    }
+  } 
+}
+*/

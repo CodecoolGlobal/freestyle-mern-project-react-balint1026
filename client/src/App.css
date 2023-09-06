@@ -10,6 +10,14 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+.logo {
+  position: absolute;
+  top: 1vw;
+  left: 2vw;
+  width: 3vw;
+  height: 3vw;
+}
+
 .UserList {
   height: calc(100vh - 2vw);
   width: 20vw;
@@ -139,4 +147,28 @@ body {
   width: calc(77vw / 4 - 5.5vw);
   text-align: right;
   margin-top: calc(77vw / 4 - 3.2vw);
+}
+
+.addEventBtn {
+  position: absolute;
+  top: 1vw;
+  left: calc(68vw);
+  height: 3vw;
+  background-color: var(--primary);
+  border-radius: 1vw;
+  cursor: pointer;
+}
+
+.addEventBtn:hover {
+  transform: scale(0.98);
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
+
+.addEventBtn > p {
+  color: var(--bg);
+  text-align: center;
+  font-size: 1vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-top: .8vw;
 }
