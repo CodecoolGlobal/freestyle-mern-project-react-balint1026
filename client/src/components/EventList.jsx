@@ -16,7 +16,7 @@ function EventList(props) {
   return (
     <div className="EventList">
       {events && events.map((event) => (
-        <div key={event._id} className="event-item" onClick={() => {props.onSelectedEvent(event._id)}}>
+        <div key={event._id} className="event-item" onClick={() => {props.onSelectedEvent(event)}}>
           <EventTile event={event}/>
         </div>
       ))}

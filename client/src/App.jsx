@@ -15,9 +15,12 @@ function App() {
   return (
     <>
       {/*< EventCreation />*/}
-      <EventList />
-      <EventPage onSelectedEvent={handleSelectedEvent()}/>
+      {selectedEvent ? <EventPage event={selectedEvent} /> : (
+        <>
+      <EventList onSelectedEvent={(event) => {handleSelectedEvent(event)}} />
       < UserList />
+      </>)}
+
     </>
   )
 }
