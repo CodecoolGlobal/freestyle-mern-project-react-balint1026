@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import EventTile from './EventTile';
 
-function EventList() {
+function EventList(props) {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -11,12 +11,12 @@ function EventList() {
       setEvents(events);
     }
     fetchEvents();
-  }, [])
+  }, []);
 
   return (
     <div className="EventList">
       {events && events.map((event) => (
-        <div key={event._id} className="event-item">
+        <div key={event._id} className="event-item" onClick={() => {props.onSelectedEvent(event._id)}}>
           <EventTile event={event}/>
         </div>
       ))}
