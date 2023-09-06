@@ -14,7 +14,7 @@ function App() {
   }
   return (
     <>
-      {/*< EventCreation />*/}
+       < EventCreation />
       {selectedEvent ? <EventPage event={selectedEvent} /> : (
         <>
       <EventList onSelectedEvent={(event) => {handleSelectedEvent(event)}} />
