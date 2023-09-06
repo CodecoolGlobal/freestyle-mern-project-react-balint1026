@@ -29,8 +29,8 @@ start()
 //get all users
 app.get('/api/users', (req, res) => {
   User.find(req.body)
-  .sort({ username: 1 })
-  .then(users => res.status(200).json(users));
+    .sort({ username: 1 })
+    .then(users => res.status(200).json(users));
 })
 
 //-- get a user
@@ -72,39 +72,48 @@ app.delete('/api/users/:id', (req, res) => {
 //Login / register Enpoints
 
 app.get('/api/login', (req, res) => {
-  User.find({username: req.body.username, password: req.body.password})
-  .then(user => res.status(200).json(user));
+  User.find({ username: req.body.username, password: req.body.password })
+    .then(user => res.status(200).json(user));
 })
 
 app.post('/api/register', async (req, res) => {
-  const result = await User.find({username: req.body.username});
-   if (result.length > 0) {
-    res.status(500).json({error: "nah"})
-   }
-   else{
+  const result = await User.find({ username: req.body.username });
+  if (result.length > 0) {
+    res.status(500).json({ error: "nah" })
+  }
+  else {
     User.create(req.body)
-    .then(res.status(200).json("Registration successs"))
-   }
+      .then(res.status(200).json("Registration successs"))
+  }
 })
 
 app.post('/api/events', async (req, res) => {
-    try {
-      const { host, name, description, attendees, location, date, price } = req.body;
-  
-      const newEvent = new Event({
-        host,
-        name,
-        description,
-        attendees,
-        location,
-        date,
-        price,
-      });
-  
-      const savedEvent = await newEvent.save();
-      res.status(201).json(savedEvent);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server Error' });
-    }
-  });
+  try {
+    const { host, name, description, attendees, location, date, price } = req.body;
+
+    const newEvent = new Event({
+      host,
+      name,
+      description,
+      attendees,
+      location,
+      date,
+      price,
+    });
+
+    const savedEvent = await newEvent.save();
+    res.status(201).json(savedEvent);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
+app.get('/api/events', async (req, res) => {
+  try {
+    const events = await Event.find({});
+    res.send(events);
+  } catch (err) {
+    console.log(err);
+  }
+});
