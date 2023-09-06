@@ -1,8 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
-import User from "./model/User.js";
-import Event from "./model/Event.js";
+import userModel from "./model/User.js";
+import eventModel from "./model/Event.js";
 
 const app = express();
 dotenv.config();
@@ -23,21 +23,20 @@ async function start() {
 
 app.use(express.json());
 
-
 start()
 
 //User Endpoint
 
 //get all users
 app.get('/api/users', (req, res) => {
-  User.find(req.body)
+  userModel.find(req.body)
     .sort({ username: 1 })
     .then(users => res.status(200).json(users));
 })
 
 app.get('/api/users/:username', async (req, res) => {
   try {
-    const user = await User.find({username: req.params.username});
+    const user = await userModel.find({username: req.params.username});
     res.send(user);
   } catch (err) {
     console.log(err);
@@ -46,7 +45,7 @@ app.get('/api/users/:username', async (req, res) => {
 
 //-- get a user
 app.get('/api/users/:id', (req, res) => {
-  User.findById(req.params.id)
+  userModel.findById(req.params.id)
     .then(user => {
       res.status(200).json(user);
     })
@@ -57,14 +56,14 @@ app.get('/api/users/:id', (req, res) => {
 
 //Create new User
 app.post('/api/users', (req, res) => {
-  User.create(req.body)
+  userModel.create(req.body)
     .then(res.status(201).json("User created"))
     .catch(res.status(500).json({ error: "Could not create document" }))
 })
 
 //update user
 app.patch('/api/users/:id', (req, res) => {
-  User.findByIdAndUpdate(req.params.id, { $set: req.body })
+  userModel.findByIdAndUpdate(req.params.id, { $set: req.body })
     .then((user) => res.status(200).json(user))
     .catch(() => {
       res.status(500).json({ error: "Could not update the document" })
@@ -73,7 +72,7 @@ app.patch('/api/users/:id', (req, res) => {
 
 //Delete user
 app.delete('/api/users/:id', (req, res) => {
-  User.findByIdAndDelete(req.params.id)
+  userModel.findByIdAndDelete(req.params.id)
     .then(res.status(200).json("User deleted"))
     .catch(res.status(500).json({ error: "Could not delete the document" }))
 });
@@ -83,18 +82,18 @@ app.delete('/api/users/:id', (req, res) => {
 //Login / register Enpoints
 
 app.get('/api/login', (req, res) => {
-  User.find({ username: req.body.username, password: req.body.password })
+  userModel.find({ username: req.body.username, password: req.body.password })
     .then(user => res.status(200).json(user))
     .catch(res.status(500).json({ error: "Error in login" }))
 })
 
 app.post('/api/register', async (req, res) => {
-  const result = await User.find({ username: req.body.username });
+  const result = await userModel.find({ username: req.body.username });
   if (result.length > 0) {
     res.status(500).json({ error: "Username is taken" })
   }
   else {
-    User.create(req.body)
+    userModel.create(req.body)
       .then(res.status(200).json("Registration successs"))
       .catch(res.status(500).json({ error: "Registration failed" }))
   }
@@ -104,7 +103,7 @@ app.post('/api/events', async (req, res) => {
   try {
     const { host, name, description, attendees, location, date, price } = req.body;
 
-    const newEvent = new Event({
+    const newEvent = new eventModel({
       host,
       name,
       description,
@@ -124,7 +123,7 @@ app.post('/api/events', async (req, res) => {
 
 app.get('/api/events', async (req, res) => {
   try {
-    const events = await Event.find({}).populate('attendees');
+    const events = await eventModel.find({}).populate('attendees');
     res.send(events);
   } catch (err) {
     console.log(err);
@@ -132,7 +131,7 @@ app.get('/api/events', async (req, res) => {
 });
 
 app.get('/api/events/:id', (req, res) => {
-  Event.findById(req.params.id)
+  eventModel.findById(req.params.id)
     .then(event => {res.status(200).json(event)})
     .catch(() => {res.status(500)});
 });
