@@ -155,7 +155,7 @@ body {
   left: calc(68vw);
   height: 3vw;
   background-color: var(--primary);
-  border-radius: 5vw;
+  border-radius: 1vw;
   cursor: pointer;
 }
 
