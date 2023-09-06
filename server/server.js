@@ -119,3 +119,9 @@ app.get('/api/events', async (req, res) => {
     console.log(err);
   }
 });
+
+app.get('/api/events/:id', (req, res) => {
+  Event.findById(req.params.id)
+    .then(event => {res.status(200).json(event)})
+    .catch(() => {res.status(500)});
+});
