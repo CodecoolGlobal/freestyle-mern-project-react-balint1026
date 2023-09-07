@@ -292,6 +292,11 @@ div .navbar {
   background-color: #525357;
 }
 
+.event-attendees {
+  display: inline-block;
+  
+}
+
 .profile {
   margin: 3vh;
   background-color: var(--elementbg);
