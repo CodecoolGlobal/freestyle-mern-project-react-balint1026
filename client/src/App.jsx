@@ -38,47 +38,88 @@ function App() {
   function handleAllEvents() {
     setIsAddingNewEvent(false)
   }
-
-  return (
-    <>
-        {/*Page*/}
-        {
-          isAddingNewEvent ?
-            <EventCreation handelEventAddingDone={() => setIsAddingNewEvent(false)} />
-            :
-            <>
-              {selectedEvent ?
-                <EventPage event={selectedEvent} />
-                :
-                      {/*Navigation*/}
-      {isLogin ? <>
-        <Navbar >
-          <img className='logo' src={logo} />
-          <NavItem title="Events">
-            <div className='dropdown'>
-              <DropdownItem onClick={handleAllEvents}>Events</DropdownItem>
-              <DropdownItem onClick={handleAddNewEvent}>Add New Event</DropdownItem>
-
-            </div>
-          </NavItem>
-          <NavItem title="Profile">
-            <div className='dropdown'>
-              <DropdownItem >My Profile</DropdownItem>
-              <DropdownItem onClick={handleLogin}>Log out</DropdownItem>
-            </div>
-          </NavItem>
-        </Navbar >
-              }
-        <button onClick={handleLogin}>Log out</button>
-                    <img className='logo' src={logo} />
-                    <div className='addEventBtn' onClick={handleAddNewEvent}><p>Add New Event</p></div>
-                    <EventList onSelectedEvent={(event) => { handleSelectedEvent(event) }} />
-                    < UserList />
+  /*
+    return (
+      <>
+        {isAddingNewEvent ?
+          <EventCreation handelEventAddingDone={() => setIsAddingNewEvent(false)} />
+          :
+          <>
+            {selectedEvent ?
+              <EventPage event={selectedEvent} />
+              :
+                {isLogin ? 
+                  
+                  :
+              <Navbar >
+                <img className='logo' src={logo} />
+                <NavItem title="Events">
+                  <div className='dropdown'>
+                    <DropdownItem onClick={handleAllEvents}>Events</DropdownItem>
+                    <DropdownItem onClick={handleAddNewEvent}>Add New Event</DropdownItem>
+  
+                  </div>
+                </NavItem>
+                <NavItem title="Profile">
+                  <div className='dropdown'>
+                    <DropdownItem >My Profile</DropdownItem>
+                    <DropdownItem onClick={handleLogin}>Log out</DropdownItem>
+                  </div>
+                </NavItem>
+              </Navbar >
+                }
+              <button onClick={handleLogin}>Log out</button>
+              <img className='logo' src={logo} />
+              <div className='addEventBtn' onClick={handleAddNewEvent}><p>Add New Event</p></div>
+              <EventList onSelectedEvent={(event) => { handleSelectedEvent(event) }} />
+              < UserList />
             </>
+          }
+          </>
+          <LoginPage handler={handleLogin} />
         }
       </>
-        :
-        <LoginPage handler={handleLogin} />}
+    )
+  */
+  return (
+    <>
+      {isAddingNewEvent ? (
+        <EventCreation handleEventAddingDone={() => setIsAddingNewEvent(false)} />
+      ) : (
+        <>
+          {selectedEvent ? (
+            <EventPage event={selectedEvent} />
+          ) : (
+            <>
+              {isLogin ? (
+                <>
+                  <Navbar >
+                    <img className='logo' src={logo} />
+                    <NavItem title="Events">
+                      <div className='dropdown'>
+                        <DropdownItem onClick={handleAllEvents}>Events</DropdownItem>
+                        <DropdownItem onClick={handleAddNewEvent}>Add New Event</DropdownItem>
+
+                      </div>
+                    </NavItem>
+                    <NavItem title="Profile">
+                      <div className='dropdown'>
+                        <DropdownItem >My Profile</DropdownItem>
+                        <DropdownItem onClick={handleLogin}>Log out</DropdownItem>
+                      </div>
+                    </NavItem>
+                  </Navbar >
+                  <img className='logo' src={logo} />
+                  <EventList onSelectedEvent={(event) => { handleSelectedEvent(event) }} />
+                  < UserList />
+                </>
+              ) : (
+                <LoginPage handler={handleLogin} />
+              )}
+            </>
+          )}
+        </>
+      )}
     </>
   )
 }
