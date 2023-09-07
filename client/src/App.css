@@ -7,6 +7,15 @@
 
 body {
   margin: 1vw;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.logo {
+  position: absolute;
+  top: 1vw;
+  left: 2vw;
+  width: 3vw;
+  height: 3vw;
 }
 
 .UserList {
@@ -69,4 +78,97 @@ body {
   margin-top: 4vh;
   margin-left: 1vw;
   font-weight: bold;
+}
+
+.EventList {
+  height: calc(92vh - 2vw);
+  width: 77vw;
+  margin-top: 8vh;
+  float: left;
+  border-radius: 1vw;
+  background-color: var(--elementbg);
+  overflow-y: scroll;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+.EventList::-webkit-scrollbar {
+  width: 0px;
+}
+
+.event-item {
+  height: calc(77vw / 4);
+}
+
+.event-item > div {
+  background-color: var(--bg);
+  border-radius: 1vw;
+  width: calc(77vw / 4 - 2vw);
+  height: calc(77vw / 4 - 2vw);
+  margin-left: 1vw;
+  margin-top: 1vw;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.1);
+  cursor: pointer;
+  position: relative;
+}
+
+.event-item > div > h1 {
+  font-size: large;
+}
+
+.event-item > div > h3 {
+  padding: 1vw;
+}
+
+.event-item > div > p {
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-top: -1.2vw;
+  margin-bottom: 1.5vw
+}
+
+.event-item > div > h4 {
+  padding-left: 1vw;
+  margin-top: -.5vw;
+  font-size: small;
+}
+
+.event-item > div > img {
+  position: absolute;
+  width: 3vw;
+  border-radius: 5vw;
+  border-bottom-right-radius: 1vw;
+  margin-left: calc(77vw / 4 - 5vw);
+  margin-top: calc(77vw / 4 - 5vw);
+}
+
+.event-item > div > h5 {
+  position: absolute;
+  width: calc(77vw / 4 - 5.5vw);
+  text-align: right;
+  margin-top: calc(77vw / 4 - 3.2vw);
+}
+
+.addEventBtn {
+  position: absolute;
+  top: 1vw;
+  left: calc(68vw);
+  height: 3vw;
+  background-color: var(--primary);
+  border-radius: 1vw;
+  cursor: pointer;
+}
+
+.addEventBtn:hover {
+  transform: scale(0.98);
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
+
+.addEventBtn > p {
+  color: var(--bg);
+  text-align: center;
+  font-size: 1vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-top: .8vw;
 }

@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import cityData from '../../../server/hu.json'
 
 const EventCreation = () => {
+  console.log(cityData);
+  const cities = cityData
   const [eventData, setEventData] = useState({
     name: '',
     description: '',
@@ -72,13 +75,14 @@ const EventCreation = () => {
         </div>
         <div>
           <label>Location:</label>
-          <input
-            type="text"
-            name="location"
-            value={eventData.location}
-            onChange={handleInputChange}
-            required
-          />
+          <select name="location"
+             value={eventData.location}
+             onChange={handleInputChange}
+             required>{cities.map((item) => (
+            <option key={item.city} value={item.city}>{item.city}</option>))}
+            </select>
+          
+
         </div>
         <div>
           <label>Date:</label>

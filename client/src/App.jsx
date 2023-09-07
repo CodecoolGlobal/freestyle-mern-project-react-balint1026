@@ -1,32 +1,65 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import UserList from './components/UserList';
-import EventCreation from './components/EventCreation'
 import LoginPage from './components/LoginPage';
+import EventCreation from './components/EventCreation';
+import EventList from './components/EventList';
+import EventPage from './components/EventPage';
+import logo from './assets/logo.svg';
 
 function App() {
-
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isAddingNewEvent, setIsAddingNewEvent] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
 
-  function handleLogin(prop) {
+useEffect(() => {
+  if (localStorage.getItem("username")) {
+    setIsLogin(true);
+  }
+},[])
+
+  function handleLogin() {
     if (isLogin) {
       localStorage.clear();
     }
     setIsLogin(!isLogin);
   }
 
+  const handleSelectedEvent = (event) => {
+    setSelectedEvent(event);
+  }
+
+  function handleAddNewEvent() {
+    setIsAddingNewEvent(true);
+  }
+
   return (
     <>
-      {isLogin ?
-        <div>
-          <button onClick={handleLogin}>Log out</button>
-          < EventCreation />
-          < UserList />
-        </div> 
-        :
-        <LoginPage handler={handleLogin} />
-      }
+      {isAddingNewEvent ? (
+        <EventCreation handelEventAddingDone={() => setIsAddingNewEvent(false)} />
+      ) : (
+        <>
+          {selectedEvent ?
+            (
+              <EventPage event={selectedEvent} />
+            ) : (
+              <>
+                {isLogin ?
+                  <>
+                    <button onClick={handleLogin}>Log out</button>
+                    <img className='logo' src={logo} />
+                    <div className='addEventBtn' onClick={handleAddNewEvent}><p>Add New Event</p></div>
+                    <EventList onSelectedEvent={(event) => { handleSelectedEvent(event) }} />
+                    < UserList />
+                  </>
+                  :
+                  <LoginPage handler={handleLogin} />
+                }
 
+              </>
+            )}
+        </>
+      )}
     </>
   )
 }
