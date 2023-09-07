@@ -266,3 +266,7 @@ div .navbar{
   background-color: #525357;
 }
 
+.event-attendees {
+  display: inline-block;
+  
+}
