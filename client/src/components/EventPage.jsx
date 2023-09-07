@@ -39,7 +39,7 @@ const EventPage = (props) => {
         <>
           {event && (
             <>
-              <div style={{ float: "left" }}>
+              <div className="event-page" style={{ float: "left", width:"76vw"}}>
                 <h2>{event.name}</h2>
                 <p><b>Host:</b> {event.host}</p>
                 <p><b>Description</b>: {event.description}</p>

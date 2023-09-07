@@ -45,7 +45,7 @@ function Chat(props) {
     <div className="Chat">
       <div>
         {messages && messages.map((message, index) => (
-          <p key={Date.now() + index.toString()} style={{ marginLeft: '1vw' }}>{(message.name.split(' ')[0] ? message.name.split(' ')[0] : message.name) + ': '}<b>{message.message}</b></p>
+          <p key={Date.now() + index.toString()} style={{ marginLeft: '1vw' }}>{message.name + ': '}<b>{message.message}</b></p>
         ))}
       </div>
       <input onKeyDown={handleSendMessage} />

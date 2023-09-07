@@ -107,6 +107,7 @@ function App() {
       <>
         <Navbar >
           <img className='logo' src={logo} />
+          <NavItem title="Demo"></NavItem>
           <NavItem title="Events">
             <div className='dropdown'>
               <DropdownItem onClick={handleTurnOffAllPage}>Events</DropdownItem>
