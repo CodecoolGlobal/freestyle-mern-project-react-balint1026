@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 let allUsers = [];
 
-function UserList() {
+function UserList(props) {
   const [displayUsers, setDisplayUsers] = useState(allUsers);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ function UserList() {
       <input placeholder="Search" onInput={handleSearch} />
       <div>
         {displayUsers && displayUsers.map((user) => (
-          <div key={user._id} onClick={() => { handleUserSelection(user.username) }}>
+          <div key={user._id} onClick={() => { props.handler(user.username) }}>
             <img src={user.picture} />
             <span>{user.name}</span>
           </div>
