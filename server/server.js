@@ -29,14 +29,14 @@ start()
 
 //get all users
 app.get('/api/users', (req, res) => {
-  userModel.find(req.body)
+  userModel.find(req.query.username ? { username: req.query.username } : {})
     .sort({ username: 1 })
     .then(users => res.status(200).json(users));
 })
 
 app.get('/api/users/:username', async (req, res) => {
   try {
-    const user = await userModel.find({username: req.params.username});
+    const user = await userModel.find({ username: req.params.username });
     res.send(user);
   } catch (err) {
     console.log(err);
@@ -82,21 +82,33 @@ app.delete('/api/users/:id', (req, res) => {
 //Login / register Enpoints
 
 app.get('/api/login', (req, res) => {
-  userModel.find({ username: req.body.username, password: req.body.password })
+  userModel.find({ username: req.query.username, password: req.query.password })
     .then(user => res.status(200).json(user))
-    .catch(res.status(500).json({ error: "Error in login" }))
+    .catch(err => res.status(500).json("Could not fetch the document"))
 })
 
 app.post('/api/register', async (req, res) => {
-  const result = await userModel.find({ username: req.body.username });
-  if (result.length > 0) {
-    res.status(500).json({ error: "Username is taken" })
-  }
-  else {
-    userModel.create(req.body)
-      .then(res.status(200).json("Registration successs"))
-      .catch(res.status(500).json({ error: "Registration failed" }))
-  }
+  const { username, password, age, name, picture } = req.body;
+  userModel.findOne({ username: username }).then(result => {
+    if (result) {
+      res.status(200).json(result);
+    }
+    else {
+      userModel.create({
+        name: name,
+        age: Number(age),
+        username: username,
+        password: password,
+        picture: picture,
+        attending: []
+      })
+        .then(user => res.status(201).json(null))
+        .catch(() => res.status(500).json({ error: "Could not create document" }))
+    }
+  });
+
+  /*
+  /**/
 })
 
 app.post('/api/events', async (req, res) => {
@@ -132,8 +144,8 @@ app.get('/api/events', async (req, res) => {
 
 app.get('/api/events/:id', (req, res) => {
   eventModel.findById(req.params.id)
-    .then(event => {res.status(200).json(event)})
-    .catch(() => {res.status(500)});
+    .then(event => { res.status(200).json(event) })
+    .catch(() => { res.status(500) });
 });
 
 /*
