@@ -35,6 +35,10 @@ function App() {
     setIsAddingNewEvent(true);
   }
 
+  function handleAllEvents() {
+    setIsAddingNewEvent(false)
+  }
+
   return (
     <>
       {/*Navigation*/}
@@ -43,7 +47,9 @@ function App() {
           <img className='logo' src={logo} />
           <NavItem title="Events">
             <div className='dropdown'>
+              <DropdownItem onClick={handleAllEvents}>Events</DropdownItem>
               <DropdownItem onClick={handleAddNewEvent}>Add New Event</DropdownItem>
+
             </div>
           </NavItem>
           <NavItem title="Profile">
