@@ -41,7 +41,16 @@ function App() {
 
   return (
     <>
-      {/*Navigation*/}
+        {/*Page*/}
+        {
+          isAddingNewEvent ?
+            <EventCreation handelEventAddingDone={() => setIsAddingNewEvent(false)} />
+            :
+            <>
+              {selectedEvent ?
+                <EventPage event={selectedEvent} />
+                :
+                      {/*Navigation*/}
       {isLogin ? <>
         <Navbar >
           <img className='logo' src={logo} />
@@ -59,22 +68,12 @@ function App() {
             </div>
           </NavItem>
         </Navbar >
-
-        {/*Page*/}
-        {
-          isAddingNewEvent ?
-            <EventCreation handelEventAddingDone={() => setIsAddingNewEvent(false)} />
-            :
-            <>
-              {selectedEvent ?
-                <EventPage event={selectedEvent} />
-                :
-                isLogin &&
-                <>
-                  <EventList onSelectedEvent={(event) => { handleSelectedEvent(event) }} />
-                  < UserList />
-                </>
               }
+        <button onClick={handleLogin}>Log out</button>
+                    <img className='logo' src={logo} />
+                    <div className='addEventBtn' onClick={handleAddNewEvent}><p>Add New Event</p></div>
+                    <EventList onSelectedEvent={(event) => { handleSelectedEvent(event) }} />
+                    < UserList />
             </>
         }
       </>
