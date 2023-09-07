@@ -252,9 +252,6 @@ app.get('/api/chat/:eventid', async (req, res) => {
 io.on('connection', (socket) => {
 
   socket.on('chat', async (message) => {
-    console.log(message)
-    
-
     const newMessage = new chatModel({
       senderid: message.senderid,
       message: message.message,
@@ -263,8 +260,6 @@ io.on('connection', (socket) => {
     });
 
     await newMessage.save();
-
-    console.log(newMessage);
 
     socket.in(socket.rooms.values().next().value).emit('chat', message);
   });
