@@ -3,8 +3,15 @@ import mongoose from "mongoose";
 import dotenv from 'dotenv';
 import userModel from "./model/User.js";
 import eventModel from "./model/Event.js";
+import chatModel from "./model/Chat.js";
 
 const app = express();
+
+import http from 'http';
+const server = http.createServer(app);
+import { Server } from "socket.io";
+const io = new Server(server);
+
 dotenv.config();
 
 mongoose.set("strictQuery", false);
@@ -12,7 +19,7 @@ mongoose.set("strictQuery", false);
 async function start() {
   try {
     await mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.8u3exxo.mongodb.net/project`)
-    app.listen(3000, () => console.log("Server started on port 3000"));
+    server.listen(3000, () => console.log("Server started on port 3000"));
     console.log('mongo is connected')
     //loadAttendeesIntoEveryEvent();
     //loadUserIdsIntoEvents();
@@ -189,3 +196,33 @@ async function loadUserIdsIntoEvents() {
   } 
 }
 */
+
+app.get('/api/chat/:eventid', async (req, res) => {
+  try {
+    const messages = await chatModel.find({ eventid: req.params.eventid });
+    res.send(messages);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+io.on('connection', (socket) => {
+
+  socket.on('chat', async (message) => {
+    console.log(message)
+    socket.in(socket.rooms.values().next().value).emit('chat', message);
+
+    const newMessage = new chatModel({
+      senderid: message.senderid,
+      message: message.message,
+      eventid: message.eventid
+    });
+
+    await newMessage.save();
+  });
+
+  socket.on('connectToRoom', (room) => {
+    socket.leaveAll();
+    socket.join(room);
+  });
+});

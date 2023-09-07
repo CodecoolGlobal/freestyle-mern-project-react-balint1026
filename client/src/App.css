@@ -172,3 +172,30 @@ body {
   padding-right: 1vw;
   margin-top: .8vw;
 }
+
+.Chat {
+  height: calc(100vh - 2vw);
+  width: 20vw;
+  float: right;
+  border-radius: 1vw;
+  background-color: var(--elementbg);
+}
+
+.Chat > div {
+  border: 1px solid red;
+  width: 100%;
+  height: calc(100vh - 5.7vw);
+  border-top-left-radius: 1vw;
+  border-top-right-radius: 1vw;
+}
+
+.Chat > input {
+  width: 18vw;
+  margin-left: 1vw;
+  margin-top: 1vw;
+  font-size: medium;
+  outline: none;
+  border: 3px solid var(--primary);
+  border-radius: .5vw;
+  background-color: var(--bg);
+}
