@@ -191,11 +191,11 @@ div .navbar{
 }
 
 .Chat > div {
-  border: 1px solid red;
   width: 100%;
   height: calc(100vh - 5.7vw);
   border-top-left-radius: 1vw;
   border-top-right-radius: 1vw;
+  overflow-y: scroll;
 }
 
 .Chat > input {
