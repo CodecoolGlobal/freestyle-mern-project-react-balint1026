@@ -4,6 +4,8 @@ import io from "socket.io-client";
 function Chat(props) {
   const [messages, setMessages] = useState([]);
 
+  const [socket, setSocket] = useState(null);
+
   useEffect(() => {
     async function fetchMessages() {
       const response = await fetch('/api/chat/' + props.event._id);
@@ -11,20 +13,30 @@ function Chat(props) {
       setMessages(messagesData);
     }
     fetchMessages();
+
+    //const socket = io('ws://localhost:3000', { transports: ["websocket"] });
+    const socket = io('ws://10.44.6.124:3000', { transports: ["websocket"] });
+    socket.emit('connectToRoom', props.event._id);
+    setSocket(socket);
+
+    socket.on('chat', (message) => {
+      setMessages(messages => {
+        const updatedMessages = structuredClone(messages);
+        updatedMessages.push(message);
+        return updatedMessages
+      });
+    });
+
+    return () => {
+      socket.close();
+    }
   }, []);
-
-  const socket = io('ws://localhost:3000', { transports: ["websocket"] });
-  socket.emit('connectToRoom', props.event._id);
-
-  socket.on('chat', (message) => {
-    const updatedMessages = structuredClone(messages);
-    updatedMessages.push(message);
-    setMessages(updatedMessages);
-  });
 
   function handleSendMessage(e) {
     if (e.key === 'Enter' && e.target.value !== '') {
-      socket.emit('chat', {senderid: localStorage.getItem('userId'), eventid: props.event._id, message: e.target.value});
+      //e.target.disabled = 'true';
+      //setTimeout(() => {e.target.disabled = ''}, 3000);
+      socket.emit('chat', { senderid: localStorage.getItem('userId'), eventid: props.event._id, message: e.target.value, name: localStorage.getItem('name') });
       e.target.value = '';
     }
   }
@@ -32,8 +44,8 @@ function Chat(props) {
   return (
     <div className="Chat">
       <div>
-        {messages && messages.map((message) => (
-          <p key={message.senderid + message.eventid}>{message.message}</p>
+        {messages && messages.map((message, index) => (
+          <p key={Date.now() + index.toString()} style={{ marginLeft: '1vw' }}>{(message.name.split(' ')[0] ? message.name.split(' ')[0] : message.name) + ': '}<b>{message.message}</b></p>
         ))}
       </div>
       <input onKeyDown={handleSendMessage} />

@@ -253,15 +253,20 @@ io.on('connection', (socket) => {
 
   socket.on('chat', async (message) => {
     console.log(message)
-    socket.in(socket.rooms.values().next().value).emit('chat', message);
+    
 
     const newMessage = new chatModel({
       senderid: message.senderid,
       message: message.message,
-      eventid: message.eventid
+      eventid: message.eventid,
+      name: message.name
     });
 
     await newMessage.save();
+
+    console.log(newMessage);
+
+    socket.in(socket.rooms.values().next().value).emit('chat', message);
   });
 
   socket.on('connectToRoom', (room) => {
