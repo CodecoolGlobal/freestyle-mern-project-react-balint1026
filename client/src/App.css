@@ -207,17 +207,21 @@ div .navbar {
 }
 
 .Chat {
-  height: calc(100vh - 2vw);
+  height: calc(100vh - 2vw - 3rem);
   width: 20vw;
   float: right;
   border-radius: 1vw;
   background-color: var(--elementbg);
+  filter: brightness(0.75);
+}
+::-webkit-scrollbar {
+  width:0px;
 }
 
 
 .Chat > div {
   width: 100%;
-  height: calc(100vh - 5.7vw);
+  height: calc(100vh - 5.7vw - 3rem);
   border-top-left-radius: 1vw;
   border-top-right-radius: 1vw;
   overflow-y: scroll;
@@ -292,9 +296,38 @@ div .navbar {
   background-color: #525357;
 }
 
+.event-creation  div, h1 {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.event-creation label {
+  padding-top: 1vh;
+}
+
+.eventcreate-button{
+  margin-top: 3vh;
+}
+.location-select {
+  width: 10.5rem;
+  height: 1.5rem;
+}
+
 .event-attendees {
   display: inline-block;
+  margin-top: 5vh;
   
+}
+.event-attendees > span {
+position: absolute;
+margin-top: -4vh;
+}
+
+.event-attendees > img {
+  padding-right: 2vh;
 }
 
 .profile {

@@ -55,11 +55,12 @@ const EventCreation = (props) => {
 
 
   return (
-    <div>
+    <div className="event-creation">
       <h1>Create Event</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Name:</label>
+          <label><b>Name:</b></label>
+          <br />
           <input
             type="text"
             name="name"
@@ -69,7 +70,8 @@ const EventCreation = (props) => {
           />
         </div>
         <div>
-          <label>Description:</label>
+          <label><b>Description:</b></label>
+          <br />
           <input
             type="text"
             name="description"
@@ -79,8 +81,10 @@ const EventCreation = (props) => {
           />
         </div>
         <div>
-          <label>Location:</label>
+          <label><b>Location:</b></label>
+          <br />
           <select
+          className="location-select"
             name="location"
             value={eventData.location + ', Hungary'}
             onChange={handleInputChange}
@@ -94,7 +98,8 @@ const EventCreation = (props) => {
           </select>
         </div>
         <div>
-          <label>Date:</label>
+          <label><b>Date:</b></label>
+          <br />
           <input
             type="text"
             name="date"
@@ -104,7 +109,8 @@ const EventCreation = (props) => {
           />
         </div>
         <div>
-          <label>Price:</label>
+          <label><b>Price:</b></label>
+          <br />
           <input
             type="text"
             name="price"
@@ -114,7 +120,7 @@ const EventCreation = (props) => {
           />
         </div>
         <div>
-          <button type="submit">Create Event</button>
+          <button className="eventcreate-button" type="submit">Create Event</button>
         </div>
         {isEventCreated && (<h3 style={{color:"green"}} >Event created! Redirecting you to main page...</h3>)}
       </form>

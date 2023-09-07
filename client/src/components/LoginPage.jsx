@@ -46,7 +46,7 @@ function LoginPage(prop) {
                     if (user.length > 0) {
                         localStorage.setItem("userId", user[0]._id);
                         localStorage.setItem("username", user[0].username);
-                        localStorage.setItem("name", user[0].name);
+                        localStorage.setItem("name", user[0].name.split(' ')[0]);
                         prop.handler();
                     }
                     else {
