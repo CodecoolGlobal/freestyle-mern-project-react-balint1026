@@ -39,7 +39,7 @@ body {
   background-color: var(--elementbg);
 }
 
-.UserList > input {
+.UserList>input {
   width: 87%;
   height: 3vh;
   margin-left: 5%;
@@ -52,41 +52,41 @@ body {
   outline: none;
 }
 
-.UserList > div {
+.UserList>div {
   width: 100%;
   height: calc(92vh - var(--user-list-height));
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
-.UserList > div::-webkit-scrollbar {
+.UserList>div::-webkit-scrollbar {
   width: 5px;
 }
 
-.UserList > div::-webkit-scrollbar-track {
+.UserList>div::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.UserList > div::-webkit-scrollbar-thumb {
+.UserList>div::-webkit-scrollbar-thumb {
   background: var(--secondary);
   border-radius: 1vw;
 }
 
-.UserList > div > div {
+.UserList>div>div {
   width: 100%;
   margin-bottom: 1vh;
   position: relative;
   cursor: pointer;
 }
 
-.UserList > div > div > img {
+.UserList>div>div>img {
   height: 10vh;
   border-radius: 5vw;
   margin-left: 1vw;
   border: 3px solid var(--primary);
 }
 
-.UserList > div > div > span {
+.UserList>div>div>span {
   position: absolute;
   margin-top: 4vh;
   margin-left: 1vw;
@@ -113,7 +113,7 @@ body {
   height: calc(77vw / 4);
 }
 
-.event-item > div {
+.event-item>div {
   background-color: var(--bg);
   border-radius: 1vw;
   width: calc(77vw / 4 - 2vw);
@@ -125,28 +125,28 @@ body {
   position: relative;
 }
 
-.event-item > div > h1 {
+.event-item>div>h1 {
   font-size: large;
 }
 
-.event-item > div > h3 {
+.event-item>div>h3 {
   padding: 1vw;
 }
 
-.event-item > div > p {
+.event-item>div>p {
   padding-left: 1vw;
   padding-right: 1vw;
   margin-top: -1.2vw;
   margin-bottom: 1.5vw
 }
 
-.event-item > div > h4 {
+.event-item>div>h4 {
   padding-left: 1vw;
   margin-top: -.5vw;
   font-size: small;
 }
 
-.event-item > div > img {
+.event-item>div>img {
   position: absolute;
   width: 3vw;
   border-radius: 5vw;
@@ -155,7 +155,7 @@ body {
   margin-top: calc(77vw / 4 - 5vw);
 }
 
-.event-item > div > h5 {
+.event-item>div>h5 {
   position: absolute;
   width: calc(77vw / 4 - 5.5vw);
   text-align: right;
@@ -177,7 +177,7 @@ body {
   box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
 }
 
-.addEventBtn > p {
+.addEventBtn>p {
   color: var(--bg);
   text-align: center;
   font-size: 1vw;
@@ -188,39 +188,39 @@ body {
 
 /* Navbar css */
 
-.navbar{
+.navbar {
   height: var(--nav-size);
   background-color: var(--nav-bg);
   padding: 0 1rem;
   border-bottom: var(--nav-border);
 }
 
-ul .navbar{
+ul .navbar {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-div .navbar{
+div .navbar {
   color: var(--nav-text-color);
   text-decoration: none;
 }
 
-.navbar-nav{
+.navbar-nav {
   max-width: 100%;
   height: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.nav-item{
+.nav-item {
   width: calc(var(--nav-size) * 1.5);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.icon-buttons{
+.icon-buttons {
   --nav-button-size: calc(var(--nav-size) * 2);
   width: var(--nav-button-size);
   height: 2rem;
@@ -233,11 +233,11 @@ div .navbar{
   justify-content: center;
 }
 
-.icon-buttons:hover{
+.icon-buttons:hover {
   filter: brightness(1.2);
 }
 
-.dropdown{
+.dropdown {
   position: absolute;
   top: 58px;
   width: 300px;
@@ -250,7 +250,7 @@ div .navbar{
   z-index: 3;
 }
 
-.menu-item{
+.menu-item {
   height: 50px;
   display: flex;
   align-items: center;
@@ -259,6 +259,27 @@ div .navbar{
   padding: 0.5rem;
 }
 
-.menu-item:hover{
+.menu-item:hover {
   background-color: #525357;
+}
+
+.profile {
+  margin: 3vh;
+  background-color: var(--elementbg);
+  border-radius: 2vw;
+}
+
+.profile div {
+  padding: 2vw;
+  background-color: var(--elementbg);
+  border-radius: 2vw;
+  
+}
+
+.profile img {
+  height: 23vh;
+  border-top-left-radius: 1vw;
+  border-top-right-radius: 5vw;
+  border-bottom-right-radius: 5vw;
+  border-bottom-left-radius: 5vw;
 }

@@ -6,6 +6,7 @@ import EventCreation from './components/EventCreation';
 import EventList from './components/EventList';
 import EventPage from './components/EventPage';
 import { Navbar, NavItem } from './components/Navbar';
+import Profile from './components/Profile';
 import DropdownItem from './components/Dropdown';
 import logo from './assets/logo.svg';
 
@@ -13,6 +14,9 @@ function App() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isAddingNewEvent, setIsAddingNewEvent] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [selectedProfile, setSelectedProfile] = useState(false);
+  const [getViewProfile, setGetViewProfile] = useState(null);
+  const [isUserSetting, setIsUserSetting] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("username")) {
@@ -32,11 +36,27 @@ function App() {
   }
 
   function handleAddNewEvent() {
+    handleTurnOffAllPage();
     setIsAddingNewEvent(true);
   }
 
-  function handleAllEvents() {
-    setIsAddingNewEvent(false)
+  function handleTurnOffAllPage() {
+    setIsAddingNewEvent(false);
+    setSelectedEvent(false);
+    setSelectedProfile(false);
+    setIsUserSetting(false);
+  }
+
+  function handleUserSelection(username) {
+    handleTurnOffAllPage();
+    setSelectedProfile(true);
+    setGetViewProfile(username);
+  }
+
+  function handleSetting() {
+    handleTurnOffAllPage();
+    setSelectedProfile(true);
+    setIsUserSetting(true);
   }
 
   return (
@@ -47,14 +67,14 @@ function App() {
           <img className='logo' src={logo} />
           <NavItem title="Events">
             <div className='dropdown'>
-              <DropdownItem onClick={handleAllEvents}>Events</DropdownItem>
+              <DropdownItem onClick={handleTurnOffAllPage}>Events</DropdownItem>
               <DropdownItem onClick={handleAddNewEvent}>Add New Event</DropdownItem>
-
             </div>
           </NavItem>
           <NavItem title="Profile">
             <div className='dropdown'>
-              <DropdownItem >My Profile</DropdownItem>
+              <DropdownItem onClick={handleUserSelection} >My Profile</DropdownItem>
+              <DropdownItem onClick={handleSetting}>Settings</DropdownItem>
               <DropdownItem onClick={handleLogin}>Log out</DropdownItem>
             </div>
           </NavItem>
@@ -66,15 +86,18 @@ function App() {
             <EventCreation handelEventAddingDone={() => setIsAddingNewEvent(false)} />
             :
             <>
-              {selectedEvent ?
-                <EventPage event={selectedEvent} />
+              {selectedProfile ? <Profile isSetting={isUserSetting} username={getViewProfile} />
                 :
-                isLogin &&
-                <>
-                  <EventList onSelectedEvent={(event) => { handleSelectedEvent(event) }} />
-                  < UserList />
-                </>
+                selectedEvent ?
+                  <EventPage event={selectedEvent} />
+                  :
+                  <>
+                    <EventList onSelectedEvent={(event) => { handleSelectedEvent(event) }} />
+
+                    < UserList handler={handleUserSelection} />
+                  </>
               }
+
             </>
         }
       </>
