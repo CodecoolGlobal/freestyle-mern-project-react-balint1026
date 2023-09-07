@@ -41,7 +41,7 @@ const EventPage = (props) => {
         <>
           {event && (
             <>
-              <div style={{ float: 'left' }}>
+              <div style={{ float: 'left', width: '77vw' }}>
                 <h2>{event.name}</h2>
                 <p>Host: {event.host}</p>
                 <p>Description: {event.description}</p>
@@ -51,6 +51,7 @@ const EventPage = (props) => {
                 <p>Attendees: {event.attendees.map((person) => (
                   <span key={person._id}>{person.name}</span>
                 ))}</p>
+                <button onClick={addUserToEvent}>Join this Event</button>
               </div>
               <Chat event={event} />
             </>
