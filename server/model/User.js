@@ -4,10 +4,10 @@ import { Schema, model } from "mongoose";
 const userSchema = new Schema({
   name: String,
   age: Number,
-  username: String,
+  username: {type:String, unique: true},
   password: String,
   picture: String,
-  attending: [String]
+  attending: [{type: String}]
 });
 
 export default model('User', userSchema);
