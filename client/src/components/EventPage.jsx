@@ -5,8 +5,35 @@ const EventPage = (props) => {
 
   useEffect(() => {
     setEvent(props.event);
-    console.log(props.event);
   }, []);
+
+  const addUserToEvent = async () => {
+    try {
+      const eventId= event._id;
+
+      const userId = localStorage.getItem('userId');
+
+      const response = await fetch(`/api/events/${eventId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId }),
+      });
+  
+      if (response.ok) {
+        console.log('User added to the event successfully');
+        setEvent(await response.json());
+
+      } else {
+        console.error('Failed to add user to the event');
+      }
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  };
+  
+
   return (
     <div>
       <>
@@ -21,6 +48,7 @@ const EventPage = (props) => {
             <p>Attendees: {event.attendees.map((person) => (
                 <span key={person._id}>{person.name}</span>
             ))}</p>
+            <button onClick={addUserToEvent}>Join this Event</button>
           </>
         )}
       </>

@@ -36,7 +36,7 @@ useEffect(() => {
   return (
     <>
       {isAddingNewEvent ? (
-        <EventCreation handelEventAddingDone={() => setIsAddingNewEvent(false)} />
+        <EventCreation handleEventAddingDone={() => setIsAddingNewEvent(false)} />
       ) : (
         <>
           {selectedEvent ?

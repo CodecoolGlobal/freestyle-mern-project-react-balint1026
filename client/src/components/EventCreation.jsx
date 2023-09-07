@@ -1,16 +1,17 @@
-import { useState } from 'react';
-import cityData from '../../../server/hu.json'
+import { useState } from "react";
+import cityData from "../../../server/hu.json";
 
-const EventCreation = () => {
+const EventCreation = (props) => {
   console.log(cityData);
-  const cities = cityData
+  const cities = cityData;
   const [eventData, setEventData] = useState({
-    name: '',
-    description: '',
-    location: '',
-    date: '',
-    price: '',
+    name: "",
+    description: "",
+    location: "", 
+    date: "",
+    price: "",
   });
+  const [isEventCreated, setIsEventCreated] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,34 +21,38 @@ const EventCreation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newEvent = {
-      host: localStorage.getItem('userId'),
+      host: localStorage.getItem("username"),
       name: eventData.name,
       description: eventData.description,
       attendees: [],
-      location: eventData.location,
+      location: eventData.location  == '' ? 'Budapest, Hungary': eventData.location,
       date: eventData.date,
       price: Number(eventData.price),
     };
 
-    try { 
-      const response = await fetch('/api/events', {
-        method: 'POST',
+    try {
+      const response = await fetch("/api/events", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(newEvent),
       });
 
       if (response.ok) {
-        console.log('Event created successfully');
+        console.log("Event created successfully");
+        setIsEventCreated(true)
+       setTimeout(() => {props.handleEventAddingDone()}, 2500)
+
       } else {
         console.log(newEvent);
-        console.error('Event creation failed');
+        console.error("Event creation failed");
       }
     } catch (error) {
-      console.error('An error occurred:', error);
+      console.error("An error occurred:", error);
     }
   };
+
 
   return (
     <div>
@@ -75,14 +80,18 @@ const EventCreation = () => {
         </div>
         <div>
           <label>Location:</label>
-          <select name="location"
-             value={eventData.location}
-             onChange={handleInputChange}
-             required>{cities.map((item) => (
-            <option key={item.city} value={item.city}>{item.city}</option>))}
-            </select>
-          
-
+          <select
+            name="location"
+            value={eventData.location + ', Hungary'}
+            onChange={handleInputChange}
+            required
+          >
+            {cities.map((item) => (
+              <option key={item.city} value={item.city}>
+                {item.city}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label>Date:</label>
@@ -107,6 +116,7 @@ const EventCreation = () => {
         <div>
           <button type="submit">Create Event</button>
         </div>
+        {isEventCreated && (<h3 style={{color:"green"}} >Event created! Redirecting you to main page...</h3>)}
       </form>
     </div>
   );
