@@ -28,9 +28,9 @@ start()
 
 //get all users
 app.get('/api/users', (req, res) => {
-  User.find(req.body)
-  .sort({ username: 1 })
-  .then(users => res.status(200).json(users));
+  User.find(req.query.username ? { username: req.query.username } : {})
+    .sort({ username: 1 })
+    .then(users => res.status(200).json(users));
 })
 
 //-- get a user
@@ -72,41 +72,53 @@ app.delete('/api/users/:id', (req, res) => {
 //Login / register Enpoints
 
 app.get('/api/login', (req, res) => {
-  User.find({ username: req.body.username, password: req.body.password })
+  User.find({ username: req.query.username, password: req.query.password })
     .then(user => res.status(200).json(user))
-    .catch(res.status(500).json({ error: "Error in login" }))
+    .catch(err => res.status(500).json("Could not fetch the document"))
 })
 
 app.post('/api/register', async (req, res) => {
-  const result = await User.find({ username: req.body.username });
-  if (result.length > 0) {
-    res.status(500).json({ error: "Username is taken" })
-  }
-  else {
-    User.create(req.body)
-      .then(res.status(200).json("Registration successs"))
-      .catch(res.status(500).json({ error: "Registration failed" }))
-  }
+  const { username, password, age, name, picture } = req.body;
+  User.findOne({ username: username }).then(result => {
+    if (result) {
+      res.status(200).json(result);
+    }
+    else {
+      User.create({
+        name: name,
+        age: Number(age),
+        username: username,
+        password: password,
+        picture: picture,
+        attending: []
+      })
+        .then(user => res.status(201).json(null))
+        .catch(() => res.status(500).json({ error: "Could not create document" }))
+    }
+  });
+  
+  /*
+  /**/
 })
 
 app.post('/api/events', async (req, res) => {
-    try {
-      const { host, name, description, attendees, location, date, price } = req.body;
-  
-      const newEvent = new Event({
-        host,
-        name,
-        description,
-        attendees,
-        location,
-        date,
-        price,
-      });
-  
-      const savedEvent = await newEvent.save();
-      res.status(201).json(savedEvent);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server Error' });
-    }
-  });
+  try {
+    const { host, name, description, attendees, location, date, price } = req.body;
+
+    const newEvent = new Event({
+      host,
+      name,
+      description,
+      attendees,
+      location,
+      date,
+      price,
+    });
+
+    const savedEvent = await newEvent.save();
+    res.status(201).json(savedEvent);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
